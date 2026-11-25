@@ -5,6 +5,23 @@ from validaciones import (
     pedir_nota,
     pedir_texto,
 )
+from archivos import guardar_alumnos
+
+
+def alumnos_vacios(alumnos: dict[int, dict]) -> bool:
+    """Verifica si el diccionario de alumnos está vacío.
+
+    Args:
+        alumnos: Diccionario con el formato {dni: datos_alumno}.
+
+    Returns:
+        True si `alumnos` está vacío, False en caso contrario.
+    """
+    if len(alumnos) == 0:
+        print("\nNo hay alumnos registrados.")
+        return True
+    return False
+
 
 
 def buscar_dni(alumnos: dict[int, dict], dni: int) -> int | None:
@@ -45,7 +62,7 @@ def registrar_alumnos(alumnos: dict[int, dict]) -> dict[int, dict]:
         print(f"\nRegistro del alumno {i + 1}")
 
         dni = pedir_dni("\nIngrese el DNI del alumno: ")
-        while buscar_dni(alumnos, dni) is not None:
+        while buscar_dni(alumnos, dni) is not None:             
             print("Error: el DNI ingresado ya existe. Ingrese otro.")
             dni = pedir_dni("\nIngrese el DNI del alumno: ")
 
@@ -64,7 +81,7 @@ def registrar_alumnos(alumnos: dict[int, dict]) -> dict[int, dict]:
 
     print("Registro de alumnos completado.")
     print(f"Alumnos registrados: {cantidad}")
-
+    guardar_alumnos(alumnos)
     return alumnos
 
 
@@ -81,8 +98,7 @@ def buscar_alumno(alumnos: dict[int, dict]) -> None:
     Returns:
         None.
     """
-    if len(alumnos) == 0:
-        print("\nNo hay alumnos registrados para buscar.")
+    if alumnos_vacios(alumnos):
         return None
 
     dni = pedir_dni("\nIngrese el DNI del alumno a buscar: ")
@@ -115,8 +131,7 @@ def modificar_alumno(alumnos: dict[int, dict]) -> dict[int, dict]:
     Returns:
         El diccionario `alumnos` con el formato {dni: datos_alumno}.
     """
-    if len(alumnos) == 0:
-        print("\nNo hay alumnos registrados para modificar.")
+    if alumnos_vacios(alumnos):
         return alumnos
 
     dni = pedir_dni("\nIngrese el DNI del alumno a modificar: ")
@@ -146,7 +161,7 @@ def modificar_alumno(alumnos: dict[int, dict]) -> dict[int, dict]:
         print("\nAlumno modificado exitosamente.")
     else:
         print("\nAlumno no encontrado.")
-
+    guardar_alumnos(alumnos)
     return alumnos
 
 
@@ -164,8 +179,7 @@ def eliminar_alumno(alumnos: dict[int, dict]) -> dict[int, dict]:
     Returns:
         El diccionario `alumnos` con el formato {dni: datos_alumno}.
     """
-    if len(alumnos) == 0:
-        print("\nNo hay alumnos registrados para eliminar.")
+    if alumnos_vacios(alumnos):
         return alumnos
 
     dni = pedir_dni("\nIngrese el DNI del alumno a eliminar: ")
@@ -177,26 +191,28 @@ def eliminar_alumno(alumnos: dict[int, dict]) -> dict[int, dict]:
     else:
         print("\nAlumno no encontrado.")
 
+    guardar_alumnos(alumnos)
     return alumnos
 
 
-def listar_alumnos(alumnos: dict[int, dict]) -> None:
-    """Muestra por consola todos los alumnos registrados en el diccionario.
+def listar_alumnos(alumnos: dict[int, dict]) -> bool:
+    """Muestra por consola todos los alumnos registrados e indica si hubo registros.
 
     Verifica si hay alumnos cargados; si el diccionario está vacío, informa que
-    no hay registros. De lo contrario, recorre cada par clave-valor e imprime
-    el DNI y los datos asociados de cada alumno.
+    no hay registros y retorna `False`. De lo contrario, recorre cada par
+    clave-valor, imprime el DNI y los datos asociados de cada alumno y
+    retorna `True`.
 
     Args:
         alumnos: Diccionario con el formato {dni: datos_alumno}, donde cada
             valor contiene 'nombre', 'apellido', 'edad' y 'nota_final'.
 
     Returns:
-        None.
+        `True` si había alumnos registrados y se mostraron, o `False` si el
+        diccionario estaba vacío.
     """
-    if len(alumnos) == 0:
-        print("\nNo hay alumnos registrados para listar.")
-        return None
+    if alumnos_vacios(alumnos):
+        return False
 
     print("\nListado de alumnos:")
     for dni in alumnos:
@@ -207,4 +223,4 @@ def listar_alumnos(alumnos: dict[int, dict]) -> None:
         print(f"Edad: {datos_alumno['edad']}")
         print(f"Nota final: {datos_alumno['nota_final']}")
 
-    return None
+    return True

@@ -1,6 +1,5 @@
 import json
 
-
 def cargar_alumnos() -> dict[int, dict]:
     """Carga los datos de alumnos desde el archivo JSON o retorna un diccionario vacío.
 

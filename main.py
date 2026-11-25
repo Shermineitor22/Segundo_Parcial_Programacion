@@ -5,10 +5,7 @@ from alumnos import (
     modificar_alumno,
     registrar_alumnos,
 )
-from archivos import (
-    cargar_alumnos,
-    guardar_alumnos,
-)
+from archivos import cargar_alumnos
 from estadisticas import ver_estadisticas
 from validaciones import pedir_entero
 
@@ -30,17 +27,14 @@ while not menu:
     match opcion:
         case 1:
             registrar_alumnos(alumnos)
-            guardar_alumnos(alumnos)
         case 2:
             listar_alumnos(alumnos)
         case 3:
             buscar_alumno(alumnos)
         case 4:
             modificar_alumno(alumnos)
-            guardar_alumnos(alumnos)
         case 5:
             eliminar_alumno(alumnos)
-            guardar_alumnos(alumnos)
         case 6:
             ver_estadisticas(alumnos)
         case 7:

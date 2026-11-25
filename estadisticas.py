@@ -1,5 +1,5 @@
 from validaciones import pedir_entero
-
+from alumnos import alumnos_vacios
 
 def mostrar_mayor_nota(alumnos: dict[int, dict]) -> None:
     """Muestra por consola la mayor nota final registrada entre los alumnos.
@@ -16,8 +16,7 @@ def mostrar_mayor_nota(alumnos: dict[int, dict]) -> None:
     Returns:
         None.
     """
-    if len(alumnos) == 0:
-        print("\nNo hay alumnos registrados.")
+    if alumnos_vacios(alumnos):
         return None
 
     mayor_nota = -1.0
@@ -45,8 +44,7 @@ def mostrar_alumnos(alumnos: dict[int, dict]) -> None:
     Returns:
         None.
     """
-    if len(alumnos) == 0:
-        print("\nNo hay alumnos registrados.")
+    if alumnos_vacios(alumnos):
         return None
 
     print(f"\nCantidad de alumnos registrados: {len(alumnos)}")
@@ -70,8 +68,7 @@ def promedio_notas(alumnos: dict[int, dict]) -> None:
     """
     promedio_total = 0
 
-    if len(alumnos) == 0:
-        print("\nNo hay alumnos registrados.")
+    if alumnos_vacios(alumnos):
         return None
 
     for alumno in alumnos.values():
@@ -95,8 +92,7 @@ def mostrar_aprobados(alumnos: dict[int, dict]) -> None:
     Returns:
         None.
     """
-    if len(alumnos) == 0:
-        print("\nNo hay alumnos registrados.")
+    if alumnos_vacios(alumnos):
         return None
 
     cantidad_aprobados = 0
@@ -121,8 +117,7 @@ def mostrar_desaprobados(alumnos: dict[int, dict]) -> None:
     Returns:
         None.
     """
-    if len(alumnos) == 0:
-        print("\nNo hay alumnos registrados.")
+    if alumnos_vacios(alumnos):
         return None
 
     cantidad_desaprobados = 0
@@ -149,19 +144,18 @@ def ver_estadisticas(alumnos: dict[int, dict]) -> None:
     """
     salir = False
 
-    if len(alumnos) == 0:
-        print("\nNo hay alumnos registrados para calcular estadísticas.")
+    if alumnos_vacios(alumnos):
         return None
 
-    print("\nEstadísticas de los alumnos:")
-    print("\n1. Cantidad de alumnos registrados")
-    print("2. Promedio de notas")
-    print("3. Alumno con mayor nota final")
-    print("4. Cantidad de alumnos aprobados")
-    print("5. Cantidad de alumnos desaprobados")
-    print("6. Volver al menú principal")
-
     while not salir:
+        print("\nEstadísticas de los alumnos:")
+        print("\n1. Cantidad de alumnos registrados")
+        print("2. Promedio de notas")
+        print("3. Alumno con mayor nota final")
+        print("4. Cantidad de alumnos aprobados")
+        print("5. Cantidad de alumnos desaprobados")
+        print("6. Volver al menú principal")
+
         opcion = pedir_entero("\nSeleccione una opción: ")
 
         match opcion:
